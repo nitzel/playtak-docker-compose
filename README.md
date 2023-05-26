@@ -19,3 +19,12 @@ You may need to check out the `docker` branches (if there are no `Dockerfile`s i
 - [/](http://localhost/) for playtak UI
 - [/nui/](http://localhost/nui/) for new playtak ui
 - [/v1/](http://localhost/v1/) for playtak-api
+
+# Development
+## Setup
+- `git clone` this repository
+- `git submodule init`
+- `git submodule update`
+
+If you like to commit changes, make sure to set `git config --global diff.ignoreSubmodules dirty` so that "dirty" (non-committed files) submodules are not 
+highlighted as changes to the root-repository
