@@ -28,3 +28,16 @@ You may need to check out the `docker` branches (if there are no `Dockerfile`s i
 
 If you like to commit changes, make sure to set `git config --global diff.ignoreSubmodules dirty` so that "dirty" (non-committed files) submodules are not 
 highlighted as changes to the root-repository
+
+## nginx configuration
+to support websocket, use something like the following
+```nginx
+location / {
+        # WebSocket support
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        # forward to server
+        proxy_pass http://localhost:8900;
+}
+```
