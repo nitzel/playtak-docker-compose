@@ -1,0 +1,16 @@
+[submodule "playtak-api"]
+	path = playtak-api
+	url = https://github.com/nitzel/playtak-api
+  branch = docker
+[submodule "playtak-nui"]
+	path = playtak-nui
+	url = https://github.com/nitzel/playtak-api-ui
+  branch = docker
+[submodule "playtak-ui"]
+	path = playtak-ui
+	url = https://github.com/nitzel/playtak-ui
+  branch = docker
+[submodule "tak-server"]
+	path = tak-server
+	url = https://github.com/nitzel/playtak-server
+  branch = docker
