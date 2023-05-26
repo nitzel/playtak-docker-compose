@@ -1,0 +1,70 @@
+version: '3.4'
+
+services:
+  tak-server:
+    image: tak-server
+    networks:
+      - mynetwork
+    volumes:
+      - ./playtakdb:/playtakdb
+      - /tmp
+    build:
+      context: ./tak-server
+    ports:
+      # expose tak server ports
+      - 9998:9998
+      - 9999:9999 # HTTP API
+      - 10000:10000
+  tak-ui:
+    image: tak-ui
+    build:
+      context: ./playtak-ui
+    networks:
+      - mynetwork
+  tak-api:
+    image: tak-api
+    depends_on:
+      - reverseproxy
+    networks:
+      - mynetwork
+    volumes:
+      - ./playtakdb:/playtakdb
+    build:
+      context: ./playtak-api
+    environment:
+      - PORT=80
+      - DB_NAME=irms
+      - DB_PATH=/playtakdb/
+      - NODE_ENV=local
+      - APP_ENV=Local
+      - CORS_DOMAIN=*
+      - ANON_DB_PATH=/playtakdb/games.db
+      - DIST_PATH=dist/
+      - PLAYTAK_API_URL=http://tak-server:9998
+  tak-api-ui:
+    image: tak-api-ui
+    depends_on:
+      - reverseproxy
+      - tak-api
+    networks:
+      - mynetwork
+    build:
+      context: ./playtak-nui
+      dockerfile: ./docker/Dockerfile
+    environment:
+      - VITE_API_HOST=/
+
+  reverseproxy:
+      image: reverseproxy
+      networks:
+        - mynetwork
+      build:
+        context: .
+      ports:
+        # expose playtak-ui + New UI + API
+        - 80:80
+      restart: always
+
+networks:
+  mynetwork:
+    driver: bridge
