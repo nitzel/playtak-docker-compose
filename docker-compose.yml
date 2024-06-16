@@ -19,6 +19,9 @@ services:
   tak-ui:
     build:
       context: ./playtak-ui
+      target: dev
+    volumes:
+      - ./playtak-ui/src:/usr/share/nginx/html
     networks:
       - mynetwork
   tak-api:
