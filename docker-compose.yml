@@ -2,27 +2,26 @@ version: '3.4'
 
 services:
   tak-server:
-    image: tak-server
     networks:
       - mynetwork
     volumes:
       - ./playtakdb:/playtakdb
-      - /tmp
+      - /tmp # no longer needed? maybe for compilation for prod?
+      - ./tak-server:/app
     build:
       context: ./tak-server
+      target: dev
     ports:
       # expose tak server ports
       - 9998:9998
       - 9999:9999 # HTTP API
       - 10000:10000
   tak-ui:
-    image: tak-ui
     build:
       context: ./playtak-ui
     networks:
       - mynetwork
   tak-api:
-    image: tak-api
     depends_on:
       - reverseproxy
     networks:
@@ -42,7 +41,6 @@ services:
       - DIST_PATH=dist/
       - PLAYTAK_API_URL=http://tak-server:9998
   tak-api-ui:
-    image: tak-api-ui
     depends_on:
       - reverseproxy
       - tak-api
@@ -55,7 +53,6 @@ services:
       - VITE_API_HOST=/
 
   reverseproxy:
-      image: reverseproxy
       networks:
         - mynetwork
       build:
