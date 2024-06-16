@@ -29,8 +29,10 @@ services:
       - mynetwork
     volumes:
       - ./playtakdb:/playtakdb
+      - ./playtak-api:/app
     build:
       context: ./playtak-api
+      target: development
     environment:
       - PORT=80
       - DB_NAME=irms
