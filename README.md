@@ -24,12 +24,16 @@ You may need to check out the `docker` branches (if there are no `Dockerfile`s i
 ## Setup
 - `git clone` this repository
 - `git submodule init`
-- `git submodule update`
+- `git submodule update` consider using `--force`, needs to be done whenever this repository updated its submodules
+- `docker-compose up --build --remove-orphans -d`
+  - run this whenever a special config (`nginx.conf`, `docker-compose.yml`, ...) changed
 
-If you like to commit changes, make sure to set `git config --global diff.ignoreSubmodules dirty` so that "dirty" (non-committed files) submodules are not 
+If you like to commit changes, make sure to set `git config --global diff.ignoreSubmodules dirty` so that "dirty" (non-committed files) submodules are not
 highlighted as changes to the root-repository
 
 ## nginx configuration
+*2024-06-17 I don't remember why I added this here, websocket seems to be working fine as long as the reverseproxy runs on the standard HTTP/HTTPS ports*
+
 to support websocket, use something like the following
 ```nginx
 location / {
