@@ -67,6 +67,8 @@ services:
         # expose playtak-ui + New UI + API
         - 80:80
       restart: always
+      volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf # this way restarting the proxy applies config changes
 
 networks:
   mynetwork:
